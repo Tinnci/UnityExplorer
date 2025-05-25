@@ -1,12 +1,13 @@
 ﻿using UnityExplorer.ObjectExplorer;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
+using UniverseLib.Localization;
 
 namespace UnityExplorer.UI.Panels
 {
     public class ObjectExplorerPanel : UEPanel
     {
-        public override string Name => "Object Explorer";
+        public override string Name => LocalizationManager.GetString("ObjectExplorerPanel_Name");
         public override UIManager.Panels PanelType => UIManager.Panels.ObjectExplorer;
 
         public override int MinWidth => 350;
@@ -99,8 +100,8 @@ namespace UnityExplorer.UI.Panels
             tabPages.Add(ObjectSearch);
 
             // set up tabs
-            AddTabButton(tabGroup, "Scene Explorer");
-            AddTabButton(tabGroup, "Object Search");
+            AddTabButton(tabGroup, LocalizationManager.GetString("ObjectExplorerPanel_TabButton_SceneExplorer_Text"));
+            AddTabButton(tabGroup, LocalizationManager.GetString("ObjectExplorerPanel_TabButton_ObjectSearch_Text"));
 
             // default active state: Active
             this.SetActive(true);

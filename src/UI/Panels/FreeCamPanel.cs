@@ -7,6 +7,7 @@ using UnhollowerRuntimeLib;
 #if INTEROP
 using Il2CppInterop.Runtime.Injection;
 #endif
+using UniverseLib.Localization;
 
 namespace UnityExplorer.UI.Panels
 {
@@ -16,7 +17,7 @@ namespace UnityExplorer.UI.Panels
         {
         }
 
-        public override string Name => "Freecam";
+        public override string Name => LocalizationManager.GetString("FreeCamPanel_Name");
         public override UIManager.Panels PanelType => UIManager.Panels.Freecam;
         public override int MinWidth => 400;
         public override int MinHeight => 320;
@@ -86,7 +87,7 @@ namespace UnityExplorer.UI.Panels
             {
                 if (!lastMainCamera)
                 {
-                    ExplorerCore.LogWarning($"There is no previous Camera found, reverting to default Free Cam.");
+                    ExplorerCore.LogWarning(LocalizationManager.GetString("FreeCamPanel_LogWarning_NoPreviousCamera"));
                     useGameCameraToggle.isOn = false;
                 }
                 else
@@ -177,7 +178,7 @@ namespace UnityExplorer.UI.Panels
 
         protected override void ConstructPanelContent()
         {
-            startStopButton = UIFactory.CreateButton(ContentRoot, "ToggleButton", "Freecam");
+            startStopButton = UIFactory.CreateButton(ContentRoot, "ToggleButton", LocalizationManager.GetString("FreeCamPanel_ToggleButton_DefaultText"));
             UIFactory.SetLayoutElement(startStopButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             startStopButton.OnClick += StartStopButton_OnClick;
             SetToggleButtonState();
@@ -188,36 +189,31 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutElement(toggleObj, minHeight: 25, flexibleWidth: 9999);
             useGameCameraToggle.onValueChanged.AddListener(OnUseGameCameraToggled);
             useGameCameraToggle.isOn = false;
-            toggleText.text = "Use Game Camera?";
+            toggleText.text = LocalizationManager.GetString("FreeCamPanel_Toggle_UseGameCamera_Text");
 
             AddSpacer(5);
 
-            GameObject posRow = AddInputField("Position", "Freecam Pos:", "eg. 0 0 0", out positionInput, PositionInput_OnEndEdit);
+            GameObject posRow = AddInputField("Position", LocalizationManager.GetString("FreeCamPanel_InputField_Position_Label"), LocalizationManager.GetString("FreeCamPanel_InputField_Position_Placeholder"), out positionInput, PositionInput_OnEndEdit);
 
-            ButtonRef resetPosButton = UIFactory.CreateButton(posRow, "ResetButton", "Reset");
+            ButtonRef resetPosButton = UIFactory.CreateButton(posRow, "ResetButton", LocalizationManager.GetString("FreeCamPanel_Button_ResetPosition_Text"));
             UIFactory.SetLayoutElement(resetPosButton.GameObject, minWidth: 70, minHeight: 25);
             resetPosButton.OnClick += OnResetPosButtonClicked;
 
             AddSpacer(5);
 
-            AddInputField("MoveSpeed", "Move Speed:", "Default: 1", out moveSpeedInput, MoveSpeedInput_OnEndEdit);
+            AddInputField("MoveSpeed", LocalizationManager.GetString("FreeCamPanel_InputField_MoveSpeed_Label"), LocalizationManager.GetString("FreeCamPanel_InputField_MoveSpeed_Placeholder"), out moveSpeedInput, MoveSpeedInput_OnEndEdit);
             moveSpeedInput.Text = desiredMoveSpeed.ToString();
 
             AddSpacer(5);
 
-            string instructions = @"Controls:
-- WASD / Arrows: Movement
-- Space / PgUp: Move up
-- LeftCtrl / PgDown: Move down
-- Right Mouse Button: Free look
-- Shift: Super speed";
+            string instructions = LocalizationManager.GetString("FreeCamPanel_Instructions");
 
             Text instructionsText = UIFactory.CreateLabel(ContentRoot, "Instructions", instructions, TextAnchor.UpperLeft);
             UIFactory.SetLayoutElement(instructionsText.gameObject, flexibleWidth: 9999, flexibleHeight: 9999);
 
             AddSpacer(5);
 
-            inspectButton = UIFactory.CreateButton(ContentRoot, "InspectButton", "Inspect Free Camera");
+            inspectButton = UIFactory.CreateButton(ContentRoot, "InspectButton", LocalizationManager.GetString("FreeCamPanel_Button_InspectCamera_Text"));
             UIFactory.SetLayoutElement(inspectButton.GameObject, flexibleWidth: 9999, minHeight: 25);
             inspectButton.OnClick += () => { InspectorManager.Inspect(ourCamera); };
             inspectButton.GameObject.SetActive(false);
@@ -262,12 +258,12 @@ namespace UnityExplorer.UI.Panels
             if (inFreeCamMode)
             {
                 RuntimeHelper.SetColorBlockAuto(startStopButton.Component, new(0.4f, 0.2f, 0.2f));
-                startStopButton.ButtonText.text = "End Freecam";
+                startStopButton.ButtonText.text = LocalizationManager.GetString("FreeCamPanel_ToggleButton_EndFreecam");
             }
             else
             {
                 RuntimeHelper.SetColorBlockAuto(startStopButton.Component, new(0.2f, 0.4f, 0.2f));
-                startStopButton.ButtonText.text = "Begin Freecam";
+                startStopButton.ButtonText.text = LocalizationManager.GetString("FreeCamPanel_ToggleButton_BeginFreecam");
             }
         }
 
@@ -302,7 +298,7 @@ namespace UnityExplorer.UI.Panels
 
             if (!ParseUtility.TryParse(input, out Vector3 parsed, out Exception parseEx))
             {
-                ExplorerCore.LogWarning($"Could not parse position to Vector3: {parseEx.ReflectionExToString()}");
+                ExplorerCore.LogWarning(string.Format(LocalizationManager.GetString("FreeCamPanel_LogWarning_ParsePositionFailed"), parseEx.ReflectionExToString()));
                 UpdatePositionInput();
                 return;
             }
@@ -316,7 +312,7 @@ namespace UnityExplorer.UI.Panels
 
             if (!ParseUtility.TryParse(input, out float parsed, out Exception parseEx))
             {
-                ExplorerCore.LogWarning($"Could not parse value: {parseEx.ReflectionExToString()}");
+                ExplorerCore.LogWarning(string.Format(LocalizationManager.GetString("FreeCamPanel_LogWarning_ParseValueFailed"), parseEx.ReflectionExToString()));
                 moveSpeedInput.Text = desiredMoveSpeed.ToString();
                 return;
             }

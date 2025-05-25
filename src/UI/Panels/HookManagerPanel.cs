@@ -1,6 +1,7 @@
 ﻿using UnityExplorer.Hooks;
 using UnityExplorer.UI.Widgets;
 using UniverseLib.UI;
+using UniverseLib.Localization;
 
 namespace UnityExplorer.UI.Panels
 {
@@ -21,7 +22,7 @@ namespace UnityExplorer.UI.Panels
 
         // Panel
         public override UIManager.Panels PanelType => UIManager.Panels.HookManager;
-        public override string Name => "Hooks";
+        public override string Name => LocalizationManager.GetString("HookManagerPanel_Name");
         public override bool ShowByDefault => false;
         public override int MinWidth => 400;
         public override int MinHeight => 400;

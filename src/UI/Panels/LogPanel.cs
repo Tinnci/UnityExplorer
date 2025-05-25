@@ -130,7 +130,7 @@ namespace UnityExplorer.UI.Panels
             index = Logs.Count - index - 1;
 
             LogInfo log = Logs[index];
-            cell.IndexLabel.text = $"{index}:";
+            cell.IndexLabel.text = $"{index}{LocalizationManager.GetString("LogPanel_Cell_IndexLabel_Text")}";
             cell.Input.Text = log.message;
             cell.Input.Component.textComponent.color = logColors[log.type];
 
@@ -197,7 +197,7 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutGroup<HorizontalLayoutGroup>(UIRoot, false, false, true, true, 3);
             UIFactory.SetLayoutElement(UIRoot, minHeight: 25, minWidth: 50, flexibleWidth: 9999);
 
-            IndexLabel = UIFactory.CreateLabel(UIRoot, "IndexLabel", "i:", TextAnchor.MiddleCenter, Color.grey, false, 12);
+            IndexLabel = UIFactory.CreateLabel(UIRoot, "IndexLabel", $"{LocalizationManager.GetString("LogPanel_Cell_IndexLabel_Text")}", TextAnchor.MiddleCenter, Color.grey, false, 12);
             UIFactory.SetLayoutElement(IndexLabel.gameObject, minHeight: 25, minWidth: 30, flexibleWidth: 40);
 
             Input = UIFactory.CreateInputField(UIRoot, "Input", "");

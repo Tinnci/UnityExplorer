@@ -3,6 +3,7 @@ using UnityExplorer.Config;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
 using UniverseLib.UI.Panels;
+using UniverseLib.Localization;
 
 namespace UnityExplorer.UI.Panels
 {
@@ -101,7 +102,7 @@ namespace UnityExplorer.UI.Panels
             }
             catch (Exception ex)
             {
-                ExplorerCore.LogWarning($"Exception generating Panel save data: {ex}");
+                ExplorerCore.LogWarning(string.Format(LocalizationManager.GetString("UEPanel_LogWarning_GeneratingSaveData"), ex));
                 return "";
             }
         }
@@ -129,7 +130,7 @@ namespace UnityExplorer.UI.Panels
             }
             catch
             {
-                ExplorerCore.LogWarning("Invalid or corrupt panel save data! Restoring to default.");
+                ExplorerCore.LogWarning(LocalizationManager.GetString("UEPanel_LogWarning_InvalidSaveData"));
                 SetDefaultSizeAndPosition();
                 SetSaveDataToConfigValue();
             }
@@ -174,7 +175,7 @@ namespace UnityExplorer.UI.Panels
             }
             catch (Exception ex)
             {
-                ExplorerCore.Log($"Exception loading panel save data: {ex}");
+                ExplorerCore.Log(string.Format(LocalizationManager.GetString("UEPanel_Log_LoadingSaveData"), ex));
                 SetDefaultSizeAndPosition();
             }
 

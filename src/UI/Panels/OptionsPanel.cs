@@ -3,12 +3,13 @@ using UnityExplorer.CacheObject.Views;
 using UnityExplorer.Config;
 using UniverseLib.UI;
 using UniverseLib.UI.Widgets.ScrollView;
+using UniverseLib.Localization;
 
 namespace UnityExplorer.UI.Panels
 {
     public class OptionsPanel : UEPanel, ICacheObjectController, ICellPoolDataSource<ConfigEntryCell>
     {
-        public override string Name => "Options";
+        public override string Name => LocalizationManager.GetString("OptionsPanel_Title");
         public override UIManager.Panels PanelType => UIManager.Panels.Options;
 
         public override int MinWidth => 600;
@@ -68,7 +69,7 @@ namespace UnityExplorer.UI.Panels
         {
             // Save button
 
-            UniverseLib.UI.Models.ButtonRef saveBtn = UIFactory.CreateButton(this.ContentRoot, "Save", "Save Options", new Color(0.2f, 0.3f, 0.2f));
+            UniverseLib.UI.Models.ButtonRef saveBtn = UIFactory.CreateButton(this.ContentRoot, "Save", LocalizationManager.GetString("OptionsPanel_Button_Save_Text"), new Color(0.2f, 0.3f, 0.2f));
             UIFactory.SetLayoutElement(saveBtn.Component.gameObject, flexibleWidth: 9999, minHeight: 30, flexibleHeight: 0);
             saveBtn.OnClick += ConfigManager.Handler.SaveConfig;
 

@@ -118,10 +118,7 @@
         <!-- Commented out NuGet reference -->
         <!-- <PackageReference Include="UniverseLib.IL2CPP.Interop.ML" Version="1.5.4.1" /> -->
         <!-- Reference to locally built DLL -->
-        <Reference Include="UniverseLib.IL2CPP.Interop.ML">
-            <HintPath>..\UniverseLib_src\Release\UniverseLib.Il2Cpp.Interop.ML\net6.0\UniverseLib.IL2CPP.Interop.ML.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
+        <ProjectReference Include="..\\UniverseLib_src\\src\\UniverseLib.csproj" />
     </ItemGroup>
 
     <!-- mono nuget -->

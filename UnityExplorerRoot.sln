@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UniverseLib_src", "UniverseLib_src", "{0E81CE2E-8D06-EF91-C260-6FC75F6AFF02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F2E9A314-A172-8609-1633-50CB54756419}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniverseLib", "UniverseLib_src\src\UniverseLib.csproj", "{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityExplorer", "src\UnityExplorer.csproj", "{E5732137-7E17-471A-8160-FD1C2C48BC7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Debug|Any CPU.ActiveCfg = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Debug|Any CPU.Build.0 = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Debug|x64.ActiveCfg = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Debug|x64.Build.0 = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Debug|x86.ActiveCfg = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Debug|x86.Build.0 = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Release|Any CPU.ActiveCfg = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Release|Any CPU.Build.0 = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Release|x64.ActiveCfg = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Release|x64.Build.0 = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Release|x86.ActiveCfg = Release_Mono|Any CPU
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8}.Release|x86.Build.0 = Release_Mono|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Debug|Any CPU.ActiveCfg = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Debug|Any CPU.Build.0 = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Debug|x64.ActiveCfg = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Debug|x64.Build.0 = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Debug|x86.ActiveCfg = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Debug|x86.Build.0 = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Release|Any CPU.ActiveCfg = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Release|Any CPU.Build.0 = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Release|x64.ActiveCfg = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Release|x64.Build.0 = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Release|x86.ActiveCfg = BIE_Cpp_CoreCLR|Any CPU
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E}.Release|x86.Build.0 = BIE_Cpp_CoreCLR|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F2E9A314-A172-8609-1633-50CB54756419} = {0E81CE2E-8D06-EF91-C260-6FC75F6AFF02}
+		{AA7213E7-0921-448E-BE01-8DB14DE0D4D8} = {F2E9A314-A172-8609-1633-50CB54756419}
+		{E5732137-7E17-471A-8160-FD1C2C48BC7E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+EndGlobal
