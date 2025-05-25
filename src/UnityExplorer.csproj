@@ -12,6 +12,7 @@
         <RootNamespace>UnityExplorer</RootNamespace>
         <LangVersion>latest</LangVersion>
         <Configurations>BIE_Cpp;BIE_Cpp_CoreCLR;BIE5_Mono;BIE6_Mono;ML_Cpp_net6;ML_Cpp_net6_interop;ML_Cpp_net472;ML_Mono;STANDALONE_Mono;STANDALONE_Cpp</Configurations>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
     <!-- ~~~~~ CONFIGURATIONS ~~~~~ -->
     <!-- ML IL2CPP Unhollower net6 -->
