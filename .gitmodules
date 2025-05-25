@@ -1,0 +1,3 @@
+[submodule "UniverseLib_src"]
+	path = UniverseLib_src
+	url = https://github.com/Tinnci/UniverseLib.git
