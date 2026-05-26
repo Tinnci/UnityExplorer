@@ -3,7 +3,8 @@ using UnityExplorer.Config;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
 using UniverseLib.UI.Widgets.ScrollView;
-using UnityExplorer.Localization;
+using UnityExplorer.Localization;
+using UnityExplorer.UI.Widgets;
 
 namespace UnityExplorer.UI.Panels
 {
@@ -33,7 +34,8 @@ namespace UnityExplorer.UI.Panels
 
         public int ItemCount => Logs.Count;
 
-        private static ScrollPool<ConsoleLogCell> logScrollPool;
+        private static ScrollPool<ConsoleLogCell> logScrollPool;
+        private static Text statusLabel;
 
         public LogPanel(UIBase owner) : base(owner)
         {
@@ -87,22 +89,34 @@ namespace UnityExplorer.UI.Panels
                 File.AppendAllText(CurrentStreamPath, '\n' + message);
 
             if (logScrollPool != null)
-                logScrollPool.Refresh(true, false);
+                logScrollPool.Refresh(true, false);
+
+            SetStatus(string.Format(Localizer.Get("STATUS_LOG_READY", "{0} log entries."), Logs.Count));
         }
 
         private static void ClearLogs()
         {
             Logs.Clear();
-            logScrollPool.Refresh(true, true);
+            logScrollPool.Refresh(true, true);
+
+            SetStatus(Localizer.Get("STATUS_LOG_CLEARED", "Log cleared."));
         }
 
         private static void OpenLogFile()
         {
             if (File.Exists(CurrentStreamPath))
-                Process.Start(CurrentStreamPath);
+                Process.Start(CurrentStreamPath);
+
+            SetStatus(string.Format(Localizer.Get("STATUS_LOG_FILE", "Log file: {0}"), CurrentStreamPath));
         }
 
-        // Cell pool
+        private static void SetStatus(string text)
+        {
+            if (statusLabel)
+                statusLabel.text = text ?? "";
+        }
+
+        // Cell pool
 
         private static readonly Dictionary<LogType, Color> logColors = new()
         {
@@ -169,7 +183,9 @@ namespace UnityExplorer.UI.Panels
             toggleText.text = Localizer.Get("LBL_LOG_UNITY_DEBUG", "Log Unity Debug");
             toggle.isOn = ConfigManager.Log_Unity_Debug.Value;
             ConfigManager.Log_Unity_Debug.OnValueChanged += (bool val) => toggle.isOn = val;
-            toggle.onValueChanged.AddListener((bool val) => ConfigManager.Log_Unity_Debug.Value = val);
+            toggle.onValueChanged.AddListener((bool val) => ConfigManager.Log_Unity_Debug.Value = val);
+
+            statusLabel = UEUI.CreateStatus(ContentRoot, "LogStatus", string.Format(Localizer.Get("STATUS_LOG_READY", "{0} log entries."), Logs.Count));
         }
     }
 
