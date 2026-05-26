@@ -23,6 +23,7 @@ namespace UnityExplorer.UI
             HookManager,
             Clipboard,
             Freecam,
+            MCP,
             Paralives
         }
 
@@ -93,6 +94,7 @@ namespace UnityExplorer.UI
             UIPanels.Add(Panels.Freecam, new FreeCamPanel(UiBase));
             UIPanels.Add(Panels.Clipboard, new ClipboardPanel(UiBase));
             UIPanels.Add(Panels.ConsoleLog, new LogPanel(UiBase));
+            UIPanels.Add(Panels.MCP, new McpPanel(UiBase));
 #if MONO
             if (UnityExplorer.McpBridge.Paralives.ParalivesControlService.IsAvailable)
                 UIPanels.Add(Panels.Paralives, new ParalivesPanel(UiBase));

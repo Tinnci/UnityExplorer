@@ -65,7 +65,9 @@ namespace UnityExplorer.Inspectors
 
         InputFieldRef hiddenNameText;
         Text nameText;
-        Text assemblyText;
+        Text assemblyText;
+
+        Text memberSummaryText;
         Toggle autoUpdateToggle;
 
         ButtonRef dnSpyButton;
@@ -206,7 +208,9 @@ namespace UnityExplorer.Inspectors
                 lastFlagsFilter = scopeFlagsFilter;
                 lastMemberFilter = memberFilter;
 
-                FilterMembers();
+                FilterMembers();
+
+                UpdateMemberSummary();
                 MemberScrollPool.Refresh(true, true);
                 refreshWanted = false;
             }
@@ -269,7 +273,13 @@ namespace UnityExplorer.Inspectors
             }
         }
 
-        void UpdateDisplayedMembers()
+        void UpdateMemberSummary()
+        {
+            if (memberSummaryText)
+                memberSummaryText.text = $"{filteredMembers.Count} shown / {members.Count} total | {scopeFlagsFilter} | {memberFilter}";
+        }
+
+        void UpdateDisplayedMembers()
         {
             bool shouldRefresh = false;
             foreach (CacheMemberCell cell in MemberScrollPool.CellPool)
@@ -465,7 +475,9 @@ namespace UnityExplorer.Inspectors
                 new Color(0.12f, 0.12f, 0.12f));
             UIFactory.SetLayoutElement(ContentRoot, flexibleWidth: 9999, flexibleHeight: 9999);
 
-            ConstructFirstRow(ContentRoot);
+            memberSummaryText = UEUI.CreateStatus(ContentRoot, "MemberSummary", "Members ready.");
+
+            ConstructFirstRow(ContentRoot);
 
             ConstructSecondRow(ContentRoot);
 
