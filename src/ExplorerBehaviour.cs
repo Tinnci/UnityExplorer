@@ -1,4 +1,5 @@
 ﻿using UnityExplorer.UI;
+using UnityExplorer.McpBridge;
 #if CPP
 #if UNHOLLOWER
 using UnhollowerRuntimeLib;
@@ -27,10 +28,12 @@ namespace UnityExplorer
             DontDestroyOnLoad(obj);
             obj.hideFlags = HideFlags.HideAndDontSave;
             Instance = obj.AddComponent<ExplorerBehaviour>();
+            McpBridgeController.Init();
         }
 
         internal void Update()
         {
+            McpBridgeController.Update();
             ExplorerCore.Update();
         }
 
@@ -47,6 +50,8 @@ namespace UnityExplorer
         {
             if (quitting) return;
             quitting = true;
+
+            McpBridgeController.Shutdown();
 
             TryDestroy(UIManager.UIRoot?.transform.root.gameObject);
 

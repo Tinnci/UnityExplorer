@@ -28,13 +28,19 @@ namespace UnityExplorer.Config
         public static ConfigElement<KeyCode> UI_MouseInspect_Keybind;
         public static ConfigElement<string> CSConsole_Assembly_Blacklist;
         public static ConfigElement<string> Reflection_Signature_Blacklist;
-        public static ConfigElement<bool> Reflection_Hide_NativeInfoPtrs;
+        public static ConfigElement<bool> Reflection_Hide_NativeInfoPtrs;
+
+        public static ConfigElement<bool> McpBridge_Enabled;
+
+        public static ConfigElement<int> McpBridge_Port;
+
+        public static ConfigElement<int> McpBridge_RequestTimeoutMs;
 
         public enum Language
         {
             English,
             Chinese
-        }
+        }
 
         // internal configs
         internal static InternalConfigHandler InternalHandler { get; private set; }
@@ -91,7 +97,19 @@ namespace UnityExplorer.Config
 
             Hide_On_Startup = new("Hide On Startup",
                 "Should UnityExplorer be hidden on startup?",
-                false);
+                false);
+
+            McpBridge_Enabled = new("MCP Bridge Enabled",
+                "Expose a local WebSocket bridge for Model Context Protocol tooling.",
+                true);
+
+            McpBridge_Port = new("MCP Bridge Port",
+                "The localhost WebSocket port used by the UnityExplorer MCP bridge.",
+                8765);
+
+            McpBridge_RequestTimeoutMs = new("MCP Bridge Request Timeout Ms",
+                "How long the bridge waits for Unity main-thread MCP commands before timing out.",
+                5000);
 
             Startup_Delay_Time = new("Startup Delay Time",
                 "The delay on startup before the UI is created.",
@@ -154,7 +172,7 @@ namespace UnityExplorer.Config
             
             Reflection_Hide_NativeInfoPtrs = new("Hide NativeMethodInfoPtr_s and NativeFieldInfoPtr_s",
                 "Use this to blacklist NativeMethodPtr_s and NativeFieldInfoPtrs_s from the class inspector, mainly to reduce clutter.\r\n" +
-                "For example, this will hide 'Class.NativeFieldInfoPtr_value' for the field 'Class.value'.",
+                "For example, this will hide 'Class.NativeFieldInfoPtr_value' for the field 'Class.value'.",
                 false);
         }
     }
