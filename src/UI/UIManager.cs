@@ -22,7 +22,8 @@ namespace UnityExplorer.UI
             UIInspectorResults,
             HookManager,
             Clipboard,
-            Freecam
+            Freecam,
+            Paralives
         }
 
         public enum VerticalAnchor
@@ -92,6 +93,10 @@ namespace UnityExplorer.UI
             UIPanels.Add(Panels.Freecam, new FreeCamPanel(UiBase));
             UIPanels.Add(Panels.Clipboard, new ClipboardPanel(UiBase));
             UIPanels.Add(Panels.ConsoleLog, new LogPanel(UiBase));
+#if MONO
+            if (UnityExplorer.McpBridge.Paralives.ParalivesControlService.IsAvailable)
+                UIPanels.Add(Panels.Paralives, new ParalivesPanel(UiBase));
+#endif
             UIPanels.Add(Panels.Options, new OptionsPanel(UiBase));
             UIPanels.Add(Panels.UIInspectorResults, new MouseInspectorResultsPanel(UiBase));
 
