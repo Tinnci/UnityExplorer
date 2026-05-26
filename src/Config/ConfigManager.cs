@@ -1,4 +1,4 @@
-﻿using UnityExplorer.UI;
+using UnityExplorer.UI;
 
 namespace UnityExplorer.Config
 {
@@ -12,6 +12,7 @@ namespace UnityExplorer.Config
         public static ConfigHandler Handler { get; private set; }
 
         // Actual UE Settings
+        public static ConfigElement<Language> LanguageSetting;
         public static ConfigElement<KeyCode> Master_Toggle;
         public static ConfigElement<bool> Hide_On_Startup;
         public static ConfigElement<float> Startup_Delay_Time;
@@ -28,6 +29,12 @@ namespace UnityExplorer.Config
         public static ConfigElement<string> CSConsole_Assembly_Blacklist;
         public static ConfigElement<string> Reflection_Signature_Blacklist;
         public static ConfigElement<bool> Reflection_Hide_NativeInfoPtrs;
+
+        public enum Language
+        {
+            English,
+            Chinese
+        }
 
         // internal configs
         internal static InternalConfigHandler InternalHandler { get; private set; }
@@ -74,6 +81,10 @@ namespace UnityExplorer.Config
 
         private static void CreateConfigElements()
         {
+            LanguageSetting = new("Language",
+                "The language used by UnityExplorer. Requires restart to fully take effect.",
+                Language.English);
+
             Master_Toggle = new("UnityExplorer Toggle",
                 "The key to enable or disable UnityExplorer's menu and features.",
                 KeyCode.F7);

@@ -1,4 +1,5 @@
-﻿using UniverseLib.Input;
+using UnityExplorer.Localization;
+using UniverseLib.Input;
 using UniverseLib.UI;
 using UniverseLib.UI.Models;
 #if UNHOLLOWER
@@ -16,7 +17,7 @@ namespace UnityExplorer.UI.Panels
         {
         }
 
-        public override string Name => "Freecam";
+        public override string Name => Localizer.Get("PANEL_FREECAM", "Freecam");
         public override UIManager.Panels PanelType => UIManager.Panels.Freecam;
         public override int MinWidth => 400;
         public override int MinHeight => 320;

@@ -1,4 +1,5 @@
-﻿using UniverseLib.UI;
+using UniverseLib.UI;
+using UnityExplorer.Localization;
 
 namespace UnityExplorer.UI.Panels
 {
@@ -6,7 +7,7 @@ namespace UnityExplorer.UI.Panels
     {
         public static object Current { get; private set; }
 
-        public override string Name => "Clipboard";
+        public override string Name => Localizer.Get("PANEL_CLIPBOARD", "Clipboard");
         public override UIManager.Panels PanelType => UIManager.Panels.Clipboard;
 
         public override int MinWidth => 500;
@@ -87,11 +88,11 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutElement(firstRow, minHeight: 25, flexibleWidth: 999);
 
             // Title for "Current Paste:"
-            Text currentPasteTitle = UIFactory.CreateLabel(firstRow, "CurrentPasteTitle", "Current paste:", TextAnchor.MiddleLeft, color: Color.grey);
+            Text currentPasteTitle = UIFactory.CreateLabel(firstRow, "CurrentPasteTitle", Localizer.Get("LBL_CURRENT_PASTE", "Current paste:"), TextAnchor.MiddleLeft, color: Color.grey);
             UIFactory.SetLayoutElement(currentPasteTitle.gameObject, minHeight: 25, minWidth: 100, flexibleWidth: 999);
 
             // Clear clipboard button
-            UniverseLib.UI.Models.ButtonRef clearButton = UIFactory.CreateButton(firstRow, "ClearPasteButton", "Clear Clipboard");
+            UniverseLib.UI.Models.ButtonRef clearButton = UIFactory.CreateButton(firstRow, "ClearPasteButton", Localizer.Get("BTN_CLEAR_CLIPBOARD", "Clear Clipboard"));
             UIFactory.SetLayoutElement(clearButton.Component.gameObject, minWidth: 120, minHeight: 25, flexibleWidth: 0);
             clearButton.OnClick += () => Copy(null);
 
@@ -105,7 +106,7 @@ namespace UnityExplorer.UI.Panels
             UpdateCurrentPasteInfo();
 
             // Inspect button
-            UniverseLib.UI.Models.ButtonRef inspectButton = UIFactory.CreateButton(currentPasteHolder, "InspectButton", "Inspect");
+            UniverseLib.UI.Models.ButtonRef inspectButton = UIFactory.CreateButton(currentPasteHolder, "InspectButton", Localizer.Get("BTN_INSPECT", "Inspect"));
             UIFactory.SetLayoutElement(inspectButton.Component.gameObject, minHeight: 25, flexibleHeight: 0, minWidth: 80, flexibleWidth: 0);
             inspectButton.OnClick += InspectClipboard;
         }

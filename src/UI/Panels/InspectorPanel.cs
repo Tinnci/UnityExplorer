@@ -1,4 +1,5 @@
-﻿using UnityExplorer.Inspectors;
+using UnityExplorer.Inspectors;
+using UnityExplorer.Localization;
 using UniverseLib.UI;
 
 namespace UnityExplorer.UI.Panels
@@ -7,7 +8,7 @@ namespace UnityExplorer.UI.Panels
     {
         public static InspectorPanel Instance { get; private set; }
 
-        public override string Name => "Inspector";
+        public override string Name => Localizer.Get("PANEL_INSPECTOR", "Inspector");
         public override UIManager.Panels PanelType => UIManager.Panels.Inspector;
         public override bool ShouldSaveActiveState => false;
 
