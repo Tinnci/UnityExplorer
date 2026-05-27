@@ -45,6 +45,7 @@ namespace UnityExplorer.Inspectors
 
         public override bool CanDragAndResize => false;
 
+        internal Text inspectorLabelTitle;
         internal Text objNameLabel;
         internal Text objPathLabel;
         internal Text mousePosLabel;
@@ -193,11 +194,11 @@ namespace UnityExplorer.Inspectors
 
             // Title text
 
-            Text title = UIFactory.CreateLabel(inspectContent,
+            inspectorLabelTitle = UIFactory.CreateLabel(inspectContent,
                 "InspectLabel",
-                "<b>Mouse Inspector</b> (press <b>ESC</b> to cancel)",
+                "",
                 TextAnchor.MiddleCenter);
-            UIFactory.SetLayoutElement(title.gameObject, flexibleWidth: 9999);
+            UIFactory.SetLayoutElement(inspectorLabelTitle.gameObject, flexibleWidth: 9999);
 
             mousePosLabel = UIFactory.CreateLabel(inspectContent, "MousePosLabel", "Mouse Position:", TextAnchor.MiddleCenter);
 
