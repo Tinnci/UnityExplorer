@@ -3,6 +3,8 @@ name: Build UnityExplorer
 on:
   push:
     branches: [main]
+    tags:
+      - "v*"
     paths:
       - ".github/workflows/dotnet.yml"
       - "build.ps1"
@@ -47,6 +49,20 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
+
+      - name: Validate tag version
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}".TrimStart("v")
+          $source = Get-Content src/ExplorerCore.cs -Raw
+          if ($source -notmatch 'VERSION\s*=\s*"([^"]+)"') {
+            throw "Could not find ExplorerCore.VERSION in src/ExplorerCore.cs"
+          }
+          $version = $Matches[1]
+          if ($tag -ne $version) {
+            throw "Tag '$tag' does not match ExplorerCore.VERSION '$version'"
+          }
 
       - name: Build UnityExplorer
         run: ./build.ps1
