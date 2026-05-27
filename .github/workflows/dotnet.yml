@@ -1,92 +1,142 @@
 name: Build UnityExplorer
 
-# Controls when the action will run. 
 on:
   push:
-    branches: [master]
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main]
+    paths:
+      - ".github/workflows/dotnet.yml"
+      - "build.ps1"
+      - "build-configs.ps1"
+      - "src/**"
+      - "lib/**"
+      - "mcp-server/**"
+      - "UnityEditorPackage/**"
+      - "UniverseLib_src/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/dotnet.yml"
+      - "build.ps1"
+      - "build-configs.ps1"
+      - "src/**"
+      - "lib/**"
+      - "mcp-server/**"
+      - "UnityEditorPackage/**"
+      - "UniverseLib_src/**"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: windows-latest
-    if: "!contains(github.event.head_commit.message, '-noci')"
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '-noci')
+    concurrency:
+      group: unityexplorer-build-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
-      # Setup
+      - name: Checkout latest
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      - name: Checkout latest      
-        uses: actions/checkout@v2
-        
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-        
-      # Run build script
-      - run: |
-         ./build.ps1        
-          
-      #  Upload artifacts
-      
-      # BepInEx IL2CPP
-      - uses: actions/upload-artifact@v2
+
+      - name: Build UnityExplorer
+        run: ./build.ps1
+
+      - name: Upload BepInEx IL2CPP
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.BepInEx.IL2CPP.zip
-          path: ./Release/UnityExplorer.BepInEx.IL2CPP/
+          path: ./Release/UnityExplorer.BepInEx.IL2CPP.zip
       
-      # BepInEx IL2CPP CoreCLR
-      - uses: actions/upload-artifact@v2
+      - name: Upload BepInEx IL2CPP CoreCLR
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.BepInEx.IL2CPP.CoreCLR.zip
-          path: ./Release/UnityExplorer.BepInEx.IL2CPP.CoreCLR/
-     
-      # BepInEx 5 Mono
-      - uses: actions/upload-artifact@v2
+          path: ./Release/UnityExplorer.BepInEx.IL2CPP.CoreCLR.zip
+
+      - name: Upload BepInEx Unity IL2CPP CoreCLR
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip
+          path: ./Release/UnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip
+
+      - name: Upload BepInEx 5 Mono
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.BepInEx5.Mono.zip
-          path: ./Release/UnityExplorer.BepInEx5.Mono/
+          path: ./Release/UnityExplorer.BepInEx5.Mono.zip
       
-      # BepInEx 6 Mono
-      - uses: actions/upload-artifact@v2
+      - name: Upload BepInEx 6 Mono
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.BepInEx6.Mono.zip
-          path: ./Release/UnityExplorer.BepInEx6.Mono/
+          path: ./Release/UnityExplorer.BepInEx6.Mono.zip
+
+      - name: Upload BepInEx 6 Unity Mono
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnityExplorer.BepInEx6.Unity.Mono.zip
+          path: ./Release/UnityExplorer.BepInEx6.Unity.Mono.zip
       
-      # Editor
-      - uses: actions/upload-artifact@v2
+      - name: Upload Editor
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.Editor.zip
-          path: ./UnityEditorPackage/
+          path: ./Release/UnityExplorer.Editor.zip
       
-      # MelonLoader IL2CPP net6preview
-      - uses: actions/upload-artifact@v2
+      - name: Upload MelonLoader IL2CPP net6preview
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.MelonLoader.IL2CPP.net6preview.zip
-          path: ./Release/UnityExplorer.MelonLoader.IL2CPP.net6preview/
+          path: ./Release/UnityExplorer.MelonLoader.IL2CPP.net6preview.zip
+
+      - name: Upload MelonLoader IL2CPP net6preview interop
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnityExplorer.MelonLoader.IL2CPP.net6preview.interop.zip
+          path: ./Release/UnityExplorer.MelonLoader.IL2CPP.net6preview.interop.zip
+
+      - name: Upload MelonLoader IL2CPP CoreCLR
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip
+          path: ./Release/UnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip
       
-      # MelonLoader IL2CPP net472
-      - uses: actions/upload-artifact@v2
+      - name: Upload MelonLoader IL2CPP
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.MelonLoader.IL2CPP.zip
-          path: ./Release/UnityExplorer.MelonLoader.IL2CPP/
+          path: ./Release/UnityExplorer.MelonLoader.IL2CPP.zip
       
-      # MelonLoader Mono
-      - uses: actions/upload-artifact@v2
+      - name: Upload MelonLoader Mono
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.MelonLoader.Mono.zip
-          path: ./Release/UnityExplorer.MelonLoader.Mono/
+          path: ./Release/UnityExplorer.MelonLoader.Mono.zip
       
-      # Standalone Il2Cpp
-      - uses: actions/upload-artifact@v2
+      - name: Upload Standalone IL2CPP
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.Standalone.IL2CPP.zip
-          path: ./Release/UnityExplorer.Standalone.IL2CPP/
+          path: ./Release/UnityExplorer.Standalone.IL2CPP.zip
+
+      - name: Upload Standalone IL2CPP CoreCLR
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnityExplorer.Standalone.IL2CPP.CoreCLR.zip
+          path: ./Release/UnityExplorer.Standalone.IL2CPP.CoreCLR.zip
       
-      # Standalone Mono
-      - uses: actions/upload-artifact@v2
+      - name: Upload Standalone Mono
+        uses: actions/upload-artifact@v4
         with:
           name: UnityExplorer.Standalone.Mono.zip
-          path: ./Release/UnityExplorer.Standalone.Mono/
-      
+          path: ./Release/UnityExplorer.Standalone.Mono.zip
