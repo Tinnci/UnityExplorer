@@ -1,5 +1,8 @@
 ﻿using UnityExplorer.UI;
 using UnityExplorer.McpBridge;
+#if MONO
+using UnityExplorer.McpBridge.Paralives;
+#endif
 #if CPP
 #if UNHOLLOWER
 using UnhollowerRuntimeLib;
@@ -35,6 +38,9 @@ namespace UnityExplorer
         {
             McpBridgeController.Update();
             ExplorerCore.Update();
+#if MONO
+            ParalivesProfilerService.Update();
+#endif
         }
 
         // For editor, to clean up objects
