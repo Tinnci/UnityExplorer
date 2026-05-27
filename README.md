@@ -172,6 +172,51 @@ Do not validate by calling `UnityExplorer.csproj` directly with a project config
 
 Building individual configurations from your IDE is fine, though note that the initial build process builds into `Release/<version>/...` instead of the subfolders that the powershell script uses. For scripted batch validation, use `build.ps1` or `build-configs.ps1` so the solution configuration mapping is preserved.
 
+# Contributing
+
+## UniverseLib submodule
+
+`UniverseLib_src` is a git submodule and is intentionally recorded as a fixed commit in this repository. This keeps CI and release builds reproducible: checking out a UnityExplorer commit always builds against the same UniverseLib tree.
+
+To test or advance UnityExplorer against the latest local UniverseLib checkout, update the submodule worktree and then commit the new gitlink:
+
+```powershell
+git -C UniverseLib_src fetch local-root main
+git -C UniverseLib_src checkout local-root/main
+git add UniverseLib_src
+```
+
+If the submodule only has the public remote, use `git submodule update --remote UniverseLib_src` or fetch `origin main` instead of `local-root main`. Do not leave release or CI changes depending on an uncommitted, floating submodule state; commit the resulting `UniverseLib_src` pointer after validation.
+
+For periodic automation, run the same update in a scheduled workflow or local script, build the relevant configurations, and open a normal pull request containing only the submodule pointer and any required compatibility fixes. Git submodules cannot safely mean "always use latest" at checkout time without losing reproducibility.
+
+## Backporting downstream changes
+
+This fork carries local changes for build variants, localization, MCP integration, and project-specific behavior. When backporting from downstream forks such as `yukieiji/UnityExplorer` or `yukieiji/UniverseLib`, keep changes small and reviewable:
+
+1. Fetch all remotes before comparing:
+
+```powershell
+git fetch --all --prune
+```
+
+2. Find candidate patches with both commit and patch-equivalence views:
+
+```powershell
+git log --oneline --no-merges origin/main..yukieiji-ue/master
+git cherry -v origin/main yukieiji-ue/master
+```
+
+For UniverseLib, compare against `yukieiji/main` instead of `yukieiji-ue/master`.
+
+3. Prefer functional fixes over release noise. Version bumps, generated binaries, release workflow changes, README badge edits, and plain submodule bumps should usually be skipped unless they are required by the functional fix being ported.
+
+4. Cherry-pick or manually port one logical fix at a time. Manual ports are often safer where this fork has localized UI text, MCP panels, or different project configuration names.
+
+5. Validate with the solution-level configurations described in the Building section. If the change touches UniverseLib, validate UniverseLib first, then update and commit the UnityExplorer submodule pointer.
+
+6. In the pull request description, include the downstream commit hash, why the change is relevant here, any files intentionally skipped, and the exact build or smoke-test commands run.
+
 # Acknowledgments
 
 * [ManlyMarco](https://github.com/ManlyMarco) for [Runtime Unity Editor](https://github.com/ManlyMarco/RuntimeUnityEditor) \[[license](THIRDPARTY_LICENSES.md#runtimeunityeditor-license)\], the ScriptEvaluator from RUE's REPL console was used as the base for UnityExplorer's C# console.

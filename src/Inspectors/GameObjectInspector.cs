@@ -12,7 +12,7 @@ namespace UnityExplorer.Inspectors
 {
     public class GameObjectInspector : InspectorBase
     {
-        public new GameObject Target => base.Target as GameObject;
+        public new GameObject Target => base.Target.TryCast<GameObject>();
 
         public GameObject Content;
 
@@ -32,7 +32,7 @@ namespace UnityExplorer.Inspectors
         {
             base.OnBorrowedFromPool(target);
 
-            base.Target = target as GameObject;
+            base.Target = target.TryCast<GameObject>();
 
             Controls.UpdateGameObjectInfo(true, true);
             Controls.TransformControl.UpdateTransformControlValues(true);
