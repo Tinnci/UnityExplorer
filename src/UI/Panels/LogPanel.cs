@@ -95,7 +95,36 @@ namespace UnityExplorer.UI.Panels
             SetStatus(string.Format(Localizer.Get("STATUS_LOG_READY", "{0} log entries."), Logs.Count));
         }
 
-        private static void ClearLogs()
+        public static Dictionary<string, object> GetLogSnapshot(int limit)
+        {
+            int boundedLimit = Math.Max(1, Math.Min(200, limit));
+            List<object> entries = new();
+
+            int start = Math.Max(0, Logs.Count - boundedLimit);
+            for (int i = Logs.Count - 1; i >= start; i--)
+            {
+                LogInfo log = Logs[i];
+                entries.Add(new Dictionary<string, object>
+                {
+                    ["index"] = i,
+                    ["type"] = log.type.ToString(),
+                    ["message"] = log.message
+                });
+            }
+
+            return new Dictionary<string, object>
+            {
+                ["count"] = Logs.Count,
+                ["limit"] = boundedLimit,
+                ["truncated"] = Logs.Count > boundedLimit,
+                ["logFile"] = CurrentStreamPath,
+                ["entries"] = entries
+            };
+        }
+
+
+
+        private static void ClearLogs()
         {
             Logs.Clear();
             logScrollPool.Refresh(true, true);
